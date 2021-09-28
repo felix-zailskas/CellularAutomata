@@ -1,6 +1,8 @@
 from tkinter import *
 from GameOfLife import GameOfLife
 from GameOfLifeCanvas import GameOfLifeCanvas
+from Rules import Rules
+from GameInitializer import GameInitializer
 import random
 
 
@@ -12,15 +14,18 @@ canvas_width = 450
 canvas_height = 450
 resolution = 10
 ratio = 0.7
+frame_frequency = 600
 
 
 gol = GameOfLife(canvas_height, canvas_width, resolution)
-gol.fill_cells(ratio=ratio)
-gol.print_cells()
+gol.fill_cells(cells=GameInitializer.initialize_random(gol), ratio=ratio)
 
 canvas = GameOfLifeCanvas(master, gol)
 canvas.pack()
+i = 0
 while True:
-    canvas.update()
-    gol.update_cells()
+    if i == 0:
+        canvas.update()
+        gol.update_cells(Rules.SIDEROLL)
+    i = (i + 1) % frame_frequency
     master.update()
