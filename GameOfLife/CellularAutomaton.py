@@ -58,3 +58,14 @@ class CellularAutomaton:
                     continue
                 neighbors += self.cells[center_row + i][center_col + j]
         return neighbors
+
+    def get_row_neighbors(self, center_row: int, center_col: int):
+        pattern = ""
+        for j in range(-1, 2):
+            if center_col + j < 0 or center_col + j >= self.cols:
+                print("Overflow")
+                pattern += '0'
+                continue
+            print(self.cells[center_row][center_col + j])
+            pattern += str(int(self.cells[center_row][center_col + j]))
+        return pattern
