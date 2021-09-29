@@ -1,8 +1,8 @@
 from tkinter import *
-from GameOfLife import GameOfLife
-from GameOfLifeCanvas import GameOfLifeCanvas
+from CellularAutomaton import CellularAutomaton
+from CellularAutomatonCanvas import CellularAutomatonCanvas
 from Rules import Rules
-from GameInitializer import GameInitializer
+from Initializer import Initializer
 import random
 
 
@@ -10,22 +10,25 @@ master = Tk()
 
 #random.seed(0)
 
-canvas_width = 500
-canvas_height = 500
-resolution = 10
+rows = 70
+cols = 70
+resolution = 5
 ratio = 0.7
-frame_frequency = 600
+frame_frequency = 60
 
+#TODO: Automaton is only running on a square grid
+#TODO Clean up the package situation
+#TODO: Let user choose between all variations and connect all execution to the GUI
+ca = CellularAutomaton(rows, cols, resolution)
+ca.fill_cells(cells=Initializer.initialize_lines(ca), ratio=ratio)
 
-gol = GameOfLife(canvas_height, canvas_width, resolution)
-gol.fill_cells(cells=GameInitializer.initialize_checkered(gol), ratio=ratio)
-
-canvas = GameOfLifeCanvas(master, gol)
+canvas = CellularAutomatonCanvas(master, ca)
 canvas.pack()
 i = 0
 while True:
-    if i == 0:
+    if i == 0 and not ca.is_stagnating:
+        ca.print_generation()
         canvas.update()
-        gol.update_cells(Rules.PULSATE)
+        ca.update_cells(Rules.OFFSET, offset=(0, -1), carry_over=False)
     i = (i + 1) % frame_frequency
     master.update()
