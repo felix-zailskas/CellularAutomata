@@ -1,2 +1,2 @@
 # CellularAutomata
-A repository with implementations of different cellular automati
+A repository with implementations of different cellular automata
