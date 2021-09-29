@@ -8,6 +8,12 @@ class Initializer:
         return np.around(np.random.rand(automaton.rows, automaton.cols)).astype(int)
 
     @staticmethod
+    def initialize_random_row(automaton: CellularAutomaton, row):
+        cells = np.zeros((automaton.rows, automaton.cols))
+        cells[row] = np.around(np.random.rand(automaton.cols)).astype(int)
+        return cells
+
+    @staticmethod
     def initialize_lines(automaton: CellularAutomaton, horizontal=True, vertical=False):
         cells = np.empty((automaton.rows, automaton.cols))
         for i in range(automaton.rows):

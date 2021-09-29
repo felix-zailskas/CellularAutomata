@@ -13,14 +13,14 @@ class CellularAutomatonCanvas(Canvas):
         super().update()
         self.delete(ALL)
         # cells
-        for i in range(self.automaton.cols):
-            for j in range(self.automaton.rows):
+        for i in range(self.automaton.rows):
+            for j in range(self.automaton.cols):
                 x1 = i * self.automaton.res
                 y1 = j * self.automaton.res
                 x2 = (i + 1) * self.automaton.res
                 y2 = (j + 1) * self.automaton.res
                 self.create_rectangle(x1, y1, x2, y2,
-                                      fill="black" if self.automaton.cells[i][j] == 1 else "white")
+                                      fill="black" if self.automaton.cells[j][i] == 1 else "white")
         # checkered grid
         for i in range(self.automaton.cols):
             x = i * self.automaton.res
