@@ -19,7 +19,7 @@ frame_frequency = 1
 #TODO Clean up the package situation
 #TODO: Let user choose between all variations and connect all execution to the GUI
 ca = CellularAutomaton(rows, cols, resolution)
-ca.fill_cells(cells=Initializer.initialize_with_preset(ca, Presets.Guns.GOSPER))
+ca.fill_cells(cells=Initializer.initialize_with_preset(ca, Presets.Guns.SIMKIN, pos=(20, 20)))
 
 eca = CellularAutomaton(rows, cols, resolution, elementary=True)
 eca.fill_cells(cells=Initializer.initialize_random_row(eca, eca.rows - 1))
