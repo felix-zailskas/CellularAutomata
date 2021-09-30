@@ -13,8 +13,8 @@ class CellularAutomatonCanvas(Canvas):
         super().update()
         self.delete(ALL)
         # cells
-        for i in range(self.automaton.rows):
-            for j in range(self.automaton.cols):
+        for i in range(self.automaton.cols):
+            for j in range(self.automaton.rows):
                 x1 = i * self.automaton.res
                 y1 = j * self.automaton.res
                 x2 = (i + 1) * self.automaton.res

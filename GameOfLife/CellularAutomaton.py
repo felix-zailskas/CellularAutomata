@@ -5,11 +5,12 @@ import random
 
 
 class CellularAutomaton:
-    def __init__(self, rows: int, cols: int, res: int):
+    def __init__(self, rows: int, cols: int, res: int, elementary=False):
         self.rows = rows
         self.cols = cols
         self.res = res
         self.is_stagnating = False
+        self.is_elementary = elementary
         self.cells = np.empty([self.rows, self.cols], dtype=int)
         self.generation = 0
 
@@ -26,7 +27,7 @@ class CellularAutomaton:
     def print_generation(self):
         print("Current Generation: ", self.generation)
 
-    def fill_cells(self, cells: [[int]] = None, ratio: int = 0.5):
+    def fill_cells(self, cells: [[int]] = None):
         # fill with given cells
         if cells is not None:
             self.cells = cells
@@ -45,27 +46,23 @@ class CellularAutomaton:
             self.generation += 1
 
     def check_stagnating(self, new_cells: [[int]]):
-        return (self.cells == new_cells).all()
+        if self.is_elementary:
+            return np.array_equal(self.cells[self.rows - 1], new_cells[self.rows - 1])
+        return np.array_equal(self.cells, new_cells)
 
     def get_live_neighbors(self, center_row: int, center_col: int):
-        #TODO make this numpy
-        neighbors = 0
-        for i in range(-1, 2):
-            if center_row + i < 0 or center_row + i >= self.rows:
-                continue
-            for j in range(-1, 2):
-                if center_col + j < 0 or center_col + j >= self.cols:
-                    continue
-                neighbors += self.cells[center_row + i][center_col + j]
-        return neighbors
+        row_neg_off = -1 + (center_row == 0)
+        row_pos_off = 1 + (center_row != self.rows - 1)
+        col_neg_off = -1 + (center_col == 0)
+        col_pos_off = 1 + (center_col != self.cols - 1)
+        return np.sum(self.cells[center_row + row_neg_off:center_row + row_pos_off,
+                     center_col + col_neg_off:center_col + col_pos_off]) - self.cells[center_row, center_col]
 
     def get_row_neighbors(self, center_row: int, center_col: int):
-        pattern = ""
+        pattern = ''
         for j in range(-1, 2):
             if center_col + j < 0 or center_col + j >= self.cols:
-                print("Overflow")
                 pattern += '0'
                 continue
-            print(self.cells[center_row][center_col + j])
             pattern += str(int(self.cells[center_row][center_col + j]))
         return pattern

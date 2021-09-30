@@ -31,8 +31,8 @@ class RuleApplication:
                 # Rule 4: Dead cells with 3 alive neighbors becomes alive
                 elif live_neighbors == 3:
                     new_cells[i][j] = 1
-                else:
-                    new_cells[i][j] = automaton.cells[i][j]
+                    continue
+                new_cells[i][j] = automaton.cells[i][j]
         return new_cells
 
     @staticmethod
@@ -79,5 +79,5 @@ class RuleApplication:
         for j in range(automaton.cols):
             neighbor_pattern = automaton.get_row_neighbors(automaton.rows - 1, j)
             rule_to_apply = int(neighbor_pattern, 2)
-            new_cells[automaton.rows - 1][j] = int(rule[rule_to_apply])
+            new_cells[automaton.rows - 1][j] = int(rule[len(rule) - rule_to_apply - 1])
         return new_cells

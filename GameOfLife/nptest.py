@@ -1,5 +1,7 @@
 import numpy as np
 
-vector = np.around(np.random.rand(5, 5))
+arr = np.array([[1,0,0],
+               [1,1,0],
+               [1,0,0]])
 
-print(vector)
+print(np.sum(arr[-1:2,:2]))

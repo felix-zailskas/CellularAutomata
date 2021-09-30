@@ -4,6 +4,13 @@ import numpy as np
 
 class Initializer:
     @staticmethod
+    def initialize_with_preset(automaton:CellularAutomaton, preset):
+        assert automaton.rows >= preset.shape[0] and automaton.cols >= preset.shape[1]
+        cells = np.zeros((automaton.rows, automaton.cols))
+        cells[:preset.shape[0], :preset.shape[1]] = preset
+        return cells
+
+    @staticmethod
     def initialize_random(automaton: CellularAutomaton):
         return np.around(np.random.rand(automaton.rows, automaton.cols)).astype(int)
 
@@ -11,6 +18,12 @@ class Initializer:
     def initialize_random_row(automaton: CellularAutomaton, row):
         cells = np.zeros((automaton.rows, automaton.cols))
         cells[row] = np.around(np.random.rand(automaton.cols)).astype(int)
+        return cells
+
+    @staticmethod
+    def initialize_cell(automaton: CellularAutomaton, row, col):
+        cells = np.zeros((automaton.rows, automaton.cols))
+        cells[row][col] = 1
         return cells
 
     @staticmethod
