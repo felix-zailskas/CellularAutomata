@@ -6,7 +6,11 @@ class Initializer:
     @staticmethod
     def initialize_with_preset(automaton:CellularAutomaton, preset, pos=(0, 0)):
         x, y = pos
-        assert automaton.rows >= preset.shape[0] + y and automaton.cols >= preset.shape[1] + x
+        try:
+            assert automaton.rows >= preset.shape[0] + y and automaton.cols >= preset.shape[1] + x
+        except AssertionError:
+            print("Preset is too large for Automaton or placed to close to the edge!")
+            return np.zeros((automaton.rows, automaton.cols))
         cells = np.zeros((automaton.rows, automaton.cols))
         cells[y:preset.shape[0] + y, x:preset.shape[1] + x] = preset
         return cells

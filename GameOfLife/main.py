@@ -12,7 +12,7 @@ master = Tk()
 #random.seed(0)
 
 rows = 60
-cols = 60
+cols = 30
 resolution = 5
 frame_frequency = 1
 
