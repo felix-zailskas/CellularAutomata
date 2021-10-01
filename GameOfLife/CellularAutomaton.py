@@ -5,10 +5,9 @@ import random
 
 
 class CellularAutomaton:
-    def __init__(self, rows: int, cols: int, res: int, elementary=False):
+    def __init__(self, rows: int, cols: int, elementary=False):
         self.rows = rows
         self.cols = cols
-        self.res = res
         self.is_stagnating = False
         self.is_elementary = elementary
         self.cells = np.empty([self.rows, self.cols], dtype=int)
@@ -27,7 +26,7 @@ class CellularAutomaton:
     def print_generation(self):
         print("Current Generation: ", self.generation)
 
-    def fill_cells(self, cells: [[int]] = None):
+    def set_cells(self, cells: [[int]] = None):
         # fill with given cells
         if cells is not None:
             self.cells = cells
@@ -44,6 +43,15 @@ class CellularAutomaton:
             self.is_stagnating = False
             self.cells = new_cells
             self.generation += 1
+
+    def copy(self):
+        copy = CellularAutomaton(self.rows, self.cols, elementary=self.is_elementary)
+        copy.set_cells(self.cells)
+        return copy
+
+    def become_stagnant(self, rule: Rules):
+        while not self.is_stagnating:
+            self.update_cells(rule)
 
     def check_stagnating(self, new_cells: [[int]]):
         if self.is_elementary:

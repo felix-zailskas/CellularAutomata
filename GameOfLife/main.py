@@ -11,26 +11,27 @@ master = Tk()
 
 #random.seed(0)
 
-rows = 60
-cols = 30
-resolution = 5
+rows = 80
+cols = 80
+resolution = 3
 frame_frequency = 1
 
+#TODO: make GUI class
 #TODO Clean up the package situation
 #TODO: Let user choose between all variations and connect all execution to the GUI
-ca = CellularAutomaton(rows, cols, resolution)
-ca.fill_cells(cells=Initializer.initialize_with_preset(ca, Presets.Guns.SIMKIN, pos=(20, 20)))
+ca = CellularAutomaton(rows, cols)
+ca.set_cells(cells=Initializer.initialize_random(ca))
 
-eca = CellularAutomaton(rows, cols, resolution, elementary=True)
-eca.fill_cells(cells=Initializer.initialize_random_row(eca, eca.rows - 1))
+eca = CellularAutomaton(rows, cols, elementary=True)
+eca.set_cells(cells=Initializer.initialize_random_row(eca, eca.rows - 1))
 
-canvas = CellularAutomatonCanvas(master, ca)
+canvas = CellularAutomatonCanvas(master, ca, resolution)
 canvas.pack()
 i = 0
 while True:
     if i == 0 and not ca.is_stagnating:
         ca.print_generation()
         canvas.update()
-        ca.update_cells(Rules.GAME_OF_LIFE)
+        ca.update_cells(Rules.MAJORITY)
     i = (i + 1) % frame_frequency
     master.update()

@@ -4,13 +4,13 @@ from Rules import Rules
 
 class RuleApplication:
     @staticmethod
-    def apply_rule(automaton, rule: Rules, rule_idx=0, offset=(1, 0), carry_over=True):
+    def apply_rule(automaton, rule: Rules, rule_idx=0, offset=(1, 0), carry_over=True, majority=5):
         if rule == Rules.GAME_OF_LIFE:
             return RuleApplication.apply_game_of_life_rule(automaton)
         if rule == Rules.PULSATE:
             return RuleApplication.apply_pulsate_rule(automaton)
         if rule == Rules.MAJORITY:
-            return RuleApplication.apply_majority_rule(automaton)
+            return RuleApplication.apply_majority_rule(automaton, majority=majority)
         if rule == Rules.ELEMENTARY:
             return RuleApplication.apply_elementary_rule(automaton, rule_idx)
         if rule == Rules.OFFSET:
@@ -18,7 +18,6 @@ class RuleApplication:
 
     @staticmethod
     def apply_game_of_life_rule(automaton):
-        # TODO: rule seems to be not working: cells jump between alive and dead
         new_cells = np.empty([automaton.rows, automaton.cols])
         for i in range(automaton.rows):
             for j in range(automaton.cols):
@@ -64,12 +63,12 @@ class RuleApplication:
         return new_cells
 
     @staticmethod
-    def apply_majority_rule(automaton):
+    def apply_majority_rule(automaton, majority):
         new_cells = np.empty([automaton.rows, automaton.cols])
         for i in range(automaton.rows):
             for j in range(automaton.cols):
                 live_neighbors = automaton.get_live_neighbors(i, j)
-                new_cells[i][j] = 1 if live_neighbors + automaton.cells[i][j] >= 5 else 0
+                new_cells[i][j] = 1 if live_neighbors + automaton.cells[i][j] >= majority else 0
         return new_cells
 
     @staticmethod
