@@ -1,8 +1,8 @@
-import RegionFiller
-from CellularAutomaton import CellularAutomaton
-from CellularAutomatonCanvas import CellularAutomatonCanvas
+from RegionFiller import RegionFiller
+from model.CellularAutomaton.CellularAutomataModel import CellularAutomaton
+from GUI.GridCanvas import GridCanvas
 from Initializer import Initializer
-from Rules import Rules
+from util.rules.Rules import Rules
 from tkinter import *
 
 
@@ -20,8 +20,8 @@ majority_ca = filled_ca.copy()
 # Fill all unreachable spots
 filled_ca.set_cells(RegionFiller.fill_region(filled_ca.cells, 0, 0))
 
-c1 = CellularAutomatonCanvas(master, filled_ca, resolution)
-c2 = CellularAutomatonCanvas(master, majority_ca, resolution)
+c1 = GridCanvas(master, filled_ca, resolution)
+c2 = GridCanvas(master, majority_ca, resolution)
 
 c1.pack(side="left", fill="both", expand=True)
 c2.pack(side="right", fill="both", expand=True)

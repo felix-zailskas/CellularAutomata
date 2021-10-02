@@ -1,11 +1,8 @@
 from tkinter import *
-from CellularAutomaton import CellularAutomaton
-from CellularAutomatonCanvas import CellularAutomatonCanvas
-from Rules import Rules
+from model.CellularAutomaton.CellularAutomataModel import CellularAutomaton
+from GUI.GridCanvas import GridCanvas
+from util.rules.Rules import Rules
 from Initializer import Initializer
-from Presets import Presets
-import random
-
 
 master = Tk()
 
@@ -25,7 +22,7 @@ ca.set_cells(cells=Initializer.initialize_random(ca))
 eca = CellularAutomaton(rows, cols, elementary=True)
 eca.set_cells(cells=Initializer.initialize_random_row(eca, eca.rows - 1))
 
-canvas = CellularAutomatonCanvas(master, ca, resolution)
+canvas = GridCanvas(master, ca, resolution)
 canvas.pack()
 i = 0
 while True:
