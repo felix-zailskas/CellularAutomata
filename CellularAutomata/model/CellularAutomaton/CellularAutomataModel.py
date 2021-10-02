@@ -1,7 +1,6 @@
-from Rules import Rules
-from RuleApplication import RuleApplication
+from CellularAutomata.util.rules.Rules import Rules
+from CellularAutomata.util.rules.RuleApplication import RuleApplication
 import numpy as np
-import random
 
 
 class CellularAutomaton:
