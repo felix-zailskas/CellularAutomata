@@ -4,6 +4,7 @@ from CellularAutomata.GUI.GridCanvas import GridCanvas
 from CellularAutomata.util.rules.Rules import Rules
 from CellularAutomata.util.initialization.Initializer import Initializer
 
+
 master = Tk()
 
 #random.seed(0)
