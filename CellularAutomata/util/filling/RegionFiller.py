@@ -1,5 +1,5 @@
 import numpy as np
-from FloodFill import flood_fill
+from CellularAutomata.util.filling.FloodFill import flood_fill
 
 
 class RegionFiller:

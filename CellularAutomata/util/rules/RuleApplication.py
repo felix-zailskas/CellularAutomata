@@ -1,8 +1,12 @@
 import numpy as np
-from Rules import Rules
+from CellularAutomata.util.rules.Rules import Rules
 
 
 class RuleApplication:
+    @staticmethod
+    def test_method(rule):
+        print("Success", rule)
+
     @staticmethod
     def apply_rule(automaton, rule: Rules, rule_idx=0, offset=(1, 0), carry_over=True, majority=5):
         if rule == Rules.GAME_OF_LIFE:

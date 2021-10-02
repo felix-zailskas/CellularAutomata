@@ -1,4 +1,4 @@
-from FloodFill import flood_fill
+from CellularAutomata.util.filling.FloodFill import flood_fill
 import numpy as np
 
 test_arr = np.array([
@@ -20,7 +20,6 @@ for row in range(test_arr.shape[0]):
     for col in range(test_arr.shape[1]):
         print(row, col)
         if not (row, col) in flooded_cells:
-            print("not in")
             result_arr[row][col] = 1
 
 print("Original:")

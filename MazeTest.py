@@ -1,6 +1,6 @@
-from model.Maze.MazeModel import Maze
+from CellularAutomata.model.Maze.MazeModel import Maze
 from tkinter import *
-from GUI.GridCanvas import GridCanvas
+from CellularAutomata.GUI.GridCanvas import GridCanvas
 import random
 
 master = Tk()
@@ -28,20 +28,20 @@ maze_data_simple = [
     [0, 0, 0, 0, 0, 0, 3, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 2, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 2, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 ]
 
 maze = Maze(rows, cols)
-maze.initialize(maze_data_simple)
+maze.initialize(maze_data)
 maze.a_star()
 
 canvas = GridCanvas(master, maze.rows, maze.cols, maze.cells, resolution)
 
 canvas.pack(side="left", fill="both", expand=True)
-canvas.update()
+canvas.update(maze.cells)
 mainloop()

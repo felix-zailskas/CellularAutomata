@@ -1,4 +1,4 @@
-from model.CellularAutomaton.CellularAutomataModel import CellularAutomaton
+from CellularAutomata.model.CellularAutomaton.CellularAutomataModel import CellularAutomaton
 import numpy as np
 
 

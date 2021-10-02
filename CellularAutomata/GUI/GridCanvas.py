@@ -1,5 +1,6 @@
 from tkinter import *
-from CellularAutomaton import CellularAutomaton
+
+import numpy as np
 
 
 class GridCanvas(Canvas):
@@ -13,13 +14,14 @@ class GridCanvas(Canvas):
         self.grid = grid
         self.colors = ['white', 'black', 'green', 'red', 'blue', 'pink']
 
-    def update(self):
+    def update(self, grid=None):
         super().update()
         self.delete(ALL)
+        if grid is not None:
+            self.grid = np.array(grid, dtype=int)
         for i in range(self.cols):
             for j in range(self.rows):
                 color = self.colors[self.grid[j][i]]
-                #print(color)
                 x1 = i * self.res
                 y1 = j * self.res
                 x2 = (i + 1) * self.res

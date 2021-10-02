@@ -1,14 +1,13 @@
 import numpy as np
-from model.CellularAutomaton.CellularAutomatonModel import CellularAutomatonModel
-from Initializer import Initializer
-from Rules import Rules
-from RegionFiller import RegionFiller
-from FloodFill import flood_fill
+from CellularAutomata.model.CellularAutomaton.CellularAutomataModel import CellularAutomaton
+from CellularAutomata.util.initialization.Initializer import Initializer
+from CellularAutomata.util.rules.Rules import Rules
+from CellularAutomata.util.filling.RegionFiller import RegionFiller
+from CellularAutomata.util.filling.FloodFill import flood_fill
 import random
 
 
 class Maze:
-    # TODO: make start and goal tile
     def __init__(self, rows: int, cols: int):
         self.rows = rows
         self.cols = cols
@@ -76,17 +75,16 @@ class Maze:
                         if ob == item:
                             return True
                 return False
-
-            print("reconstruct path")
             total_path = [current]
             first = True
             while first or is_in(came_from, current):
                 first = False
                 print(came_from[current[0]][current[1]])
                 current = came_from[current[0]][current[1]]
+                if current is None:
+                    return total_path
                 self.cells[current[0]][current[1]] = 4
                 total_path.insert(0, current)
-            print(total_path)
             return total_path
 
         open_set = [self.start]
@@ -118,6 +116,7 @@ class Maze:
                 row = neighbor[0]
                 col = neighbor[1]
                 score = g_score[curr_pos[0]][curr_pos[1]] + 1
+                print(row, col)
                 if score < g_score[row][col]:
                     came_from[row][col] = curr_tuple
                     g_score[row][col] = score
@@ -132,9 +131,9 @@ class Maze:
             neighbors.append((row - 1, col))
         if col > 0:
             neighbors.append((row, col - 1))
-        if row < self.rows:
+        if row < self.rows - 1:
             neighbors.append((row + 1, col))
-        if col < self.cols:
+        if col < self.cols - 1:
             neighbors.append((row, col + 1))
         return neighbors
 
