@@ -1,26 +1,15 @@
 from CellularAutomata.util.rules.Rules import Rules
+from CellularAutomata.model.GridContainer.GridContainer import GridContainer
 from CellularAutomata.util.rules.RuleApplication import RuleApplication
 import numpy as np
 
 
-class CellularAutomaton:
+class CellularAutomaton(GridContainer):
     def __init__(self, rows: int, cols: int, elementary=False):
-        self.rows = rows
-        self.cols = cols
+        GridContainer.__init__(self, rows, cols)
         self.is_stagnating = False
         self.is_elementary = elementary
-        self.cells = np.empty([self.rows, self.cols], dtype=int)
         self.generation = 0
-
-    def print_values(self):
-        print("Rows: ", self.rows, "Cols:", self.cols)
-        print("Cells:")
-        for i in range(self.rows):
-            print(self.cells[i])
-
-    def print_cells(self):
-        for i in range(self.rows):
-            print(self.cells[i])
 
     def print_generation(self):
         print("Current Generation: ", self.generation)
