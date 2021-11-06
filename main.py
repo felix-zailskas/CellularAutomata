@@ -9,9 +9,9 @@ master = Tk()
 
 #random.seed(0)
 
-rows = 15
-cols = 15
-resolution = 15
+rows = 50
+cols = 50
+resolution = 5
 frame_frequency = 1
 
 #TODO: make GUI class
@@ -30,6 +30,6 @@ while True:
     if i == 0 and not ca.is_stagnating:
         ca.print_generation()
         canvas.update(ca.cells)
-        ca.update_cells(Rules.OFFSET, offset=(1,0))
+        ca.update_cells(Rules.MAJORITY, offset=(1,0))
     i = (i + 1) % frame_frequency
     master.update()
