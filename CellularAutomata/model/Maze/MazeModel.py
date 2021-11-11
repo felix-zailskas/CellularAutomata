@@ -1,5 +1,6 @@
 import numpy as np
 from CellularAutomata.model.CellularAutomaton.CellularAutomataModel import CellularAutomaton
+from CellularAutomata.model.GridContainer.GridContainer import GridContainer
 from CellularAutomata.util.initialization.Initializer import Initializer
 from CellularAutomata.util.rules.Rules import Rules
 from CellularAutomata.util.filling.RegionFiller import RegionFiller
@@ -7,27 +8,12 @@ from CellularAutomata.util.filling.FloodFill import flood_fill
 import random
 
 
-class Maze:
+class Maze(GridContainer):
     def __init__(self, rows: int, cols: int):
-        self.rows = rows
-        self.cols = cols
+        GridContainer.__init__(self, rows, cols)
         self.start = (0, 0)
         self.goal = (0, 0)
-        self.cells = np.empty([self.rows, self.cols], dtype=int)
         self.reachable = None
-
-    def print_values(self):
-        print("Rows: ", self.rows, "Cols:", self.cols)
-        print(f"Start: {self.start}", f"Goal: {self.goal}")
-
-    def print_cells(self):
-        for i in range(self.rows):
-            print("[", end="")
-            for j in range(self.cols):
-                print(self.cells[i][j], end="", sep="")
-                if j < self.cols - 1:
-                    print(", ", end="")
-            print("],")
 
     def initialize(self, cells=None):
         if cells is not None:
@@ -124,16 +110,3 @@ class Maze:
                     if neighbor not in open_set:
                         open_set.append(neighbor)
         print("No path found")
-
-    def get_neighbors(self, row, col):
-        neighbors = []
-        if row > 0:
-            neighbors.append((row - 1, col))
-        if col > 0:
-            neighbors.append((row, col - 1))
-        if row < self.rows - 1:
-            neighbors.append((row + 1, col))
-        if col < self.cols - 1:
-            neighbors.append((row, col + 1))
-        return neighbors
-

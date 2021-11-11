@@ -1,31 +1,21 @@
 from CellularAutomata.util.rules.Rules import Rules
+from CellularAutomata.model.GridContainer.GridContainer import GridContainer
 from CellularAutomata.util.rules.RuleApplication import RuleApplication
 import numpy as np
+from typing import List
 
 
-class CellularAutomaton:
+class CellularAutomaton(GridContainer):
     def __init__(self, rows: int, cols: int, elementary=False):
-        self.rows = rows
-        self.cols = cols
+        GridContainer.__init__(self, rows, cols)
         self.is_stagnating = False
         self.is_elementary = elementary
-        self.cells = np.empty([self.rows, self.cols], dtype=int)
         self.generation = 0
-
-    def print_values(self):
-        print("Rows: ", self.rows, "Cols:", self.cols)
-        print("Cells:")
-        for i in range(self.rows):
-            print(self.cells[i])
-
-    def print_cells(self):
-        for i in range(self.rows):
-            print(self.cells[i])
 
     def print_generation(self):
         print("Current Generation: ", self.generation)
 
-    def set_cells(self, cells: [[int]] = None):
+    def set_cells(self, cells: List[List[int]] = None):
         # fill with given cells
         if cells is not None:
             self.cells = cells
@@ -34,7 +24,8 @@ class CellularAutomaton:
         self.cells = np.around(np.random.rand(self.rows, self.cols)).astype(int)
 
     def update_cells(self, rule: Rules = Rules.GAME_OF_LIFE, rule_idx=0, offset=(1, 0), carry_over=True):
-        new_cells = RuleApplication.apply_rule(self, rule, rule_idx=rule_idx, offset=offset, carry_over=carry_over)
+        new_cells = np.array(RuleApplication.apply_rule(self, rule, rule_idx=rule_idx, offset=offset,
+                                                        carry_over=carry_over), dtype=int)
         if self.check_stagnating(new_cells):
             self.is_stagnating = True
             print(f"Final Position reached after {self.generation} generations.")
@@ -52,12 +43,12 @@ class CellularAutomaton:
         while not self.is_stagnating:
             self.update_cells(rule)
 
-    def check_stagnating(self, new_cells: [[int]]):
+    def check_stagnating(self, new_cells: List[List[int]]) -> bool:
         if self.is_elementary:
             return np.array_equal(self.cells[self.rows - 1], new_cells[self.rows - 1])
         return np.array_equal(self.cells, new_cells)
 
-    def get_live_neighbors(self, center_row: int, center_col: int):
+    def get_live_neighbors(self, center_row: int, center_col: int) -> int:
         row_neg_off = -1 + (center_row == 0)
         row_pos_off = 1 + (center_row != self.rows - 1)
         col_neg_off = -1 + (center_col == 0)
