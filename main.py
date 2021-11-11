@@ -16,6 +16,7 @@ if __name__ == "__main__":
     ca = CellularAutomaton(rows, cols)
     ca.set_cells(cells=Initializer.initialize_random(ca))
 
+
     eca = CellularAutomaton(rows, cols, elementary=True)
     eca.set_cells(cells=Initializer.initialize_random_row(eca, eca.rows - 1))
 
